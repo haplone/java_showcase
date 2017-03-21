@@ -5,6 +5,8 @@ import cn.haplone.utils.MongoUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,9 @@ import java.util.Set;
  */
 @Component
 public class MongoPersistence {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MongoPersistence.class);
+
     private Datastore datastore;
     @Autowired
     private MongoUtils mongoUtils;
@@ -30,6 +35,7 @@ public class MongoPersistence {
 
     public <E extends BaseBean> ObjectId save(E entity) {
         datastore.save(entity);
+       LOG.info("保存数据，{}",entity);
         return entity.getId();
     }
 

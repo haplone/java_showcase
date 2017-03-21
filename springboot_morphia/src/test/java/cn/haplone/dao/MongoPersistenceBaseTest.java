@@ -4,6 +4,7 @@ import cn.haplone.App;
 import cn.haplone.bean.AddressBean;
 import cn.haplone.bean.UserBean;
 import com.mongodb.DuplicateKeyException;
+import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,6 +61,20 @@ public class MongoPersistenceBaseTest {
     public void save() {
         assertNotNull("user id 应该不为空", user.getId());
         assertEquals("只有一条记录", 1, dao.count(UserBean.class));
+    }
+
+    @Test
+    public void update() {
+        UserBean modifier = new UserBean();
+        modifier.setId(new ObjectId(user.getId().toHexString()));
+        modifier.setAge(22);
+        modifier.setFirstName("jack");
+        dao.save(modifier);
+
+        UserBean persistent = dao.get(UserBean.class, new ObjectId(user.getId().toHexString()));
+        assertEquals("修改 int", 22, persistent.getAge());
+        assertEquals("修改string", "jack", persistent.getFirstName());
+        assertNull("修改时未填充字段为空", persistent.getSurname());
     }
 
     @Test(expected = DuplicateKeyException.class)
@@ -139,16 +154,17 @@ public class MongoPersistenceBaseTest {
     }
 
     @Test
-    public void existed(){
+    public void existed() {
         Map<String, Object> filters = new HashMap<String, Object>();
         filters.put("address.zip =", "100100");
-        Assert.assertTrue("existed 存在",dao.exists(UserBean.class,filters));
+        Assert.assertTrue("existed 存在", dao.exists(UserBean.class, filters));
     }
+
     @Test
-    public void notExisted(){
+    public void notExisted() {
         Map<String, Object> filters = new HashMap<String, Object>();
         filters.put("age <", 5);
-        Assert.assertFalse("existed 不存在",dao.exists(UserBean.class,filters));
+        Assert.assertFalse("existed 不存在", dao.exists(UserBean.class, filters));
     }
 
     protected void batchSave() {

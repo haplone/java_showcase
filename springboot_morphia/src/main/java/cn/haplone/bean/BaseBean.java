@@ -22,6 +22,10 @@ public abstract class BaseBean {
     @Version
     private long version;
 
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
     public ObjectId getId() {
         return id;
     }
