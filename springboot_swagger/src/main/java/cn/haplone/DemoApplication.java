@@ -17,9 +17,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Created by z on 17-3-27.
+ * http://springfox.github.io/springfox/docs/current/
  */
-
-
 @Configuration
 @EnableSwagger2
 @SpringBootApplication
@@ -41,9 +40,9 @@ public class DemoApplication {
 
         private ApiInfo apiInfo() {
                 return new ApiInfoBuilder()
-                        .title("Source To Kafka")
-                        .description("将数据同步到kafka的配置")
-                        .termsOfServiceUrl("http://wiki.puhuitech.cn/pages/viewpage.action?pageId=20717486")
+                        .title("图书api")
+                        .description("图书测试")
+                        .termsOfServiceUrl("")
                         .license("Apache License Version 2.0")
                         .licenseUrl("https://github.com/IBM-Bluemix/news-aggregator/blob/master/LICENSE")
                         .version("2.0")
