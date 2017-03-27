@@ -30,7 +30,7 @@ import static org.junit.Assert.assertNull;
  */
 @RunWith(value = SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class MongoPersistenceBaseTest {
+public class MongoPersistenceTest {
     @Autowired
     private ApplicationContext ctx;
     @Autowired
